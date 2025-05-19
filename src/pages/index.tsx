@@ -26,7 +26,7 @@ export default function Home() {
       <Button text="Click Me" onClick={handleShowNotification} />
       {notification && (
         <Notification
-          text="This is a notification"
+          text="This is a notification."
           icon="ic:baseline-notifications"
         />
       )}

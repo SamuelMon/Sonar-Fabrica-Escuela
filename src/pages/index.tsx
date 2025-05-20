@@ -34,7 +34,7 @@ export default function Home() {
       {show && (
         <NotificationsHistory notifications={notifications} show={show} />
       )}
-      <Button text="algo" onClick={() => setNotifications([])} />
+      {false && <Button text="algo" onClick={() => setNotifications([])} />}
     </div>
   );
 }

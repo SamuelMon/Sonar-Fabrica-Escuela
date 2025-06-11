@@ -7,7 +7,10 @@ export default function Home() {
   const [notification, setNotification] = useState(false);
   const [show, setShow] = useState(false);
   const [notifications, setNotifications] = useState(
-    Array.from({ length: 20 }, (_, i) => `Notification ${i + 1}`)
+    Array.from({ length: 20 }, (_, i) => ({
+      id: i + 1,
+      text: `Notification ${i + 1}`,
+    }))
   );
 
   const handleShowNotification = () => {

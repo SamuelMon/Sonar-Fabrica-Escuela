@@ -1,8 +1,13 @@
 import NotificationsHistoryItem from "@/components/atoms/NotificationsHistoryItem";
 import React from "react";
 
+interface Notification {
+  id: number;
+  text: string;
+}
+
 interface Props {
-  notifications: string[];
+  notifications: Notification[];
   show: boolean;
 }
 
@@ -16,8 +21,8 @@ const Index = ({ notifications, show }: Props) => {
       `}
       style={{ minHeight: 0 }}
     >
-      {notifications.map((text, idx) => (
-        <div key={idx} className="p-2 shadow-md rounded-lg bg-white">
+      {notifications.map(({ id, text }) => (
+        <div key={id} className="p-2 shadow-md rounded-lg bg-white">
           <NotificationsHistoryItem
             text={text}
             icon="ic:outline-arrow-forward"

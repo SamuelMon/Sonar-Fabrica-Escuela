@@ -22,6 +22,7 @@ export default function Home() {
 
   const handleShow = () => {
     setShow(!show);
+    setNotifications([]);
   };
 
   return (
@@ -37,7 +38,6 @@ export default function Home() {
       {show && (
         <NotificationsHistory notifications={notifications} show={show} />
       )}
-      {false && <Button text="algo" onClick={() => setNotifications([])} />}
     </div>
   );
 }

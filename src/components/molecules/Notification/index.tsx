@@ -10,13 +10,25 @@ const Index = ({ text, icon }: NotificationProps) => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    // Mostramos la notificación
     setShow(true);
-    const timer = setTimeout(() => setShow(false), 3000);
-    return () => clearTimeout(timer);
+
+    // Configuramos el timer para ocultarla
+    timer = setTimeout(() => {
+      setShow(false);
+    }, 3000);
+
+    // Limpiamos el timer al desmontar
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   return (
     <div
+      data-testid="notification"
       className={`flex items-center gap-2 p-4 bg-white rounded-lg shadow-md absolute top-4 right-4 hover:cursor-pointer transition-transform duration-500 ${
         show ? "translate-x-0" : "translate-x-full"
       }`}

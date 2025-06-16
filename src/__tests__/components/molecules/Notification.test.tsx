@@ -1,20 +1,37 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import Notification from "@/components/molecules/Notification";
 
 describe("Notification Component", () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
   test("renderiza el mensaje y el icono", () => {
     render(<Notification text="Test notification" icon="test-icon" />);
     expect(screen.getByText("Test notification")).toBeInTheDocument();
   });
 
   test("se muestra y oculta correctamente", () => {
-    jest.useFakeTimers();
-    render(<Notification text="Test" icon="icon" />);
+    const { container } = render(<Notification text="Test" icon="icon" />);
 
-    expect(screen.getByText("Test")).toHaveClass("translate-x-0");
+    // Verificamos el estado inicial
+    act(() => {
+      jest.advanceTimersByTime(0);
+    });
 
-    jest.advanceTimersByTime(3000);
+    const notificationContainer = container.firstChild as HTMLElement;
+    expect(notificationContainer).toHaveClass("translate-x-0");
 
-    expect(screen.getByText("Test")).toHaveClass("translate-x-full");
+    // Avanzamos el tiempo y actualizamos el estado
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
+
+    // Esperamos a que se complete la transición
+    expect(notificationContainer).toHaveClass("translate-x-full");
   });
 });

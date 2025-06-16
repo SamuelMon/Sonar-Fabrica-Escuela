@@ -1,12 +1,31 @@
 import React from "react";
 
-const Index = ({ placeholder }: { placeholder: string }) => {
+interface InputTextProps {
+  placeholder: string;
+  type?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+  name?: string;
+}
+
+const Index = ({
+  placeholder,
+  type,
+  value,
+  onChange,
+  name,
+}: InputTextProps) => {
   return (
     <div>
       <input
-        type="text"
+        type={type || "text"}
         placeholder={placeholder}
-        className="w-96 h-11 border-none p-4 rounded-lg shadow-2xl bg-white"
+        value={value}
+        className="w-full h-11 border-2 border-gray-200 p-4 rounded-lg bg-white"
+        onChange={onChange}
+        name={name}
+        required
       />
     </div>
   );

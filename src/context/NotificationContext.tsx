@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useMemo,
+} from "react";
 import Notification from "@/components/molecules/Notification";
 
 interface NotificationData {
@@ -33,8 +39,16 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     setTimeout(() => setNotification(null), 3300);
   };
 
+  // Envolvemos el valor del contexto en useMemo
+  const contextValue = useMemo(
+    () => ({
+      showNotification,
+    }),
+    [] // El array vacío porque showNotification no cambia
+  );
+
   return (
-    <NotificationContext.Provider value={{ showNotification }}>
+    <NotificationContext.Provider value={contextValue}>
       {children}
       {notification && (
         <Notification text={notification.text} icon={notification.icon} />

@@ -15,15 +15,17 @@ const Index = ({
   value,
   onChange,
   name,
+  disabled = false,
 }: InputTextProps) => {
   return (
     <div>
       <input
-        type={type || "text"}
+        type={type ?? "text"}
         placeholder={placeholder}
         value={value}
         className="w-full h-11 border-2 border-gray-200 p-4 rounded-lg bg-white"
         onChange={onChange}
+        disabled={disabled}
         name={name}
         required
       />

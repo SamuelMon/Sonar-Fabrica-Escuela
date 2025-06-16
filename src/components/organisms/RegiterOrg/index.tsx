@@ -57,7 +57,7 @@ const Index = () => {
         const errorData = await response
           .json()
           .catch(() => ({ message: "Error de conexión con el servidor" }));
-        throw new Error(errorData.message || "Error en el registro");
+        throw new Error(errorData.message ?? "Error en el registro");
       }
 
       const data = await response.json();

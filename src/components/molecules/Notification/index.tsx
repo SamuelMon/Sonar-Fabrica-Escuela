@@ -10,15 +10,12 @@ const Index = ({ text, icon }: NotificationProps) => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    const timer: NodeJS.Timeout = setTimeout(() => {
+      setShow(false);
+    }, 3000);
 
     // Mostramos la notificación
     setShow(true);
-
-    // Configuramos el timer para ocultarla
-    timer = setTimeout(() => {
-      setShow(false);
-    }, 3000);
 
     // Limpiamos el timer al desmontar
     return () => {

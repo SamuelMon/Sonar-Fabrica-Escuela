@@ -1,5 +1,12 @@
 name: Continuous Integration and Deployment
 
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
 jobs:
   sonarqube:
     name: SonarQube

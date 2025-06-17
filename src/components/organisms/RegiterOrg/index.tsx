@@ -1,4 +1,5 @@
 import React, { useState, FormEvent, ChangeEvent } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import InputText from "@/components/atoms/InputText";
 import Button from "@/components/atoms/Button";
@@ -78,10 +79,20 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-transparent">
+      <div className="fixed top-1 mb-8">
+        <Image
+          src="/innoSistemasLogo.png"
+          alt="InnoSistemas Logo"
+          width={400}
+          height={160}
+          priority
+          className="object-contain"
+        />
+      </div>
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded shadow-md w-80 flex flex-col gap-4"
+        className="bg-white p-6 rounded shadow-md w-80 flex flex-col gap-4 mt-48"
       >
         <h2 className="text-xl font-bold mb-2">Registro</h2>
         <InputText

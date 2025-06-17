@@ -36,7 +36,7 @@ const Index = () => {
       const timeoutId = setTimeout(() => controller.abort(), 10000);
 
       const response = await fetch(
-        "https://innosistemas-feature4.onrender.com/auth/register",
+        "https://inno4-production.up.railway.app/auth/register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

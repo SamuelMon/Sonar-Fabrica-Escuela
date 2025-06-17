@@ -1,5 +1,4 @@
 import React, { useState, FormEvent } from "react";
-import Image from "next/image";
 import InputText from "@/components/atoms/InputText";
 import Button from "@/components/atoms/Button";
 import Link from "next/link";
@@ -50,13 +49,10 @@ const Index = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-transparent">
       <div className="fixed top-10 mb-8">
-        <Image
+        <img
           src="/innoSistemasLogo.png"
           alt="InnoSistemas Logo"
-          width={400}
-          height={160}
-          priority
-          className="object-contain"
+          className="w-[400px] h-[160px] object-contain"
         />
       </div>
       <form

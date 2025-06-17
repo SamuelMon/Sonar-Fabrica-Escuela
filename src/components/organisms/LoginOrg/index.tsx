@@ -2,20 +2,21 @@ import React, { useState, FormEvent } from "react";
 import InputText from "@/components/atoms/InputText";
 import Button from "@/components/atoms/Button";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
 
 const Index = () => {
+  const { login, showNotification } = useAuth();
+  const router = useRouter();
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [token, setToken] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-
-    console.log("Enviando:", { correo, contrasena });
 
     try {
       const response = await fetch(
@@ -32,13 +33,14 @@ const Index = () => {
       }
 
       const data = await response.json();
-      setToken(data.token);
+      login(data.token);
+      showNotification("¡Inicio de sesión exitoso!", "success");
+      router.push("/");
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Error al iniciar sesión");
-      }
+      const errorMessage =
+        err instanceof Error ? err.message : "Error desconocido";
+      setError(errorMessage);
+      showNotification(errorMessage, "error");
     } finally {
       setLoading(false);
     }
@@ -69,9 +71,6 @@ const Index = () => {
           disabled={loading}
         />
         {error && <div className="text-red-500 text-sm">{error}</div>}
-        {token && (
-          <div className="text-green-600 break-all">Token: {token}</div>
-        )}
         <div className="text-sm text-center mt-4">
           ¿No tienes una cuenta?{" "}
           <Link href="/register" className="text-blue-600 hover:underline">

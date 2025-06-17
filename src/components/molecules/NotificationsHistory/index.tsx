@@ -3,7 +3,9 @@ import React from "react";
 
 interface Notification {
   id: number;
-  text: string;
+  mensaje: string;
+  fechaCreacion: string;
+  tipo: string;
 }
 
 interface Props {
@@ -21,14 +23,23 @@ const Index = ({ notifications, show }: Props) => {
       `}
       style={{ minHeight: 0 }}
     >
-      {notifications.map(({ id, text }) => (
-        <div key={id} className="p-2 shadow-md rounded-lg bg-white">
-          <NotificationsHistoryItem
-            text={text}
-            icon="ic:outline-arrow-forward"
-          />
-        </div>
-      ))}
+      {notifications.length === 0 ? (
+        <p className="text-gray-500 text-sm">No hay notificaciones</p>
+      ) : (
+        notifications.map(({ id, mensaje, tipo, fechaCreacion }) => (
+          <div key={id} className="w-full p-2 shadow-md rounded-lg bg-white">
+            <NotificationsHistoryItem
+              text={mensaje}
+              icon={
+                tipo === "success"
+                  ? "ic:outline-check-circle"
+                  : "ic:outline-info"
+              }
+              date={new Date(fechaCreacion).toLocaleString()}
+            />
+          </div>
+        ))
+      )}
     </div>
   );
 };

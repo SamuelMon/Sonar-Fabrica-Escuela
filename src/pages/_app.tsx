@@ -1,11 +1,13 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { NotificationProvider } from "@/context/NotificationContext";
+import { AuthProvider } from "@/context/AuthContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <NotificationProvider>
-      <Component {...pageProps} />
-    </NotificationProvider>
+    <AuthProvider>
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
+    </AuthProvider>
   );
 }

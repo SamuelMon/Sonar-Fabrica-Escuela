@@ -1,8 +1,12 @@
 import React, { useState, FormEvent, ChangeEvent } from "react";
+import { useRouter } from "next/router";
 import InputText from "@/components/atoms/InputText";
 import Button from "@/components/atoms/Button";
+import { useAuth } from "@/context/AuthContext";
 
 const Index = () => {
+  const { showNotification } = useAuth();
+  const router = useRouter();
   const [form, setForm] = useState({
     correo: "",
     contrasena: "",
@@ -16,7 +20,6 @@ const Index = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -26,7 +29,6 @@ const Index = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    setSuccess(null);
 
     try {
       console.log("Datos a enviar:", form);
@@ -60,20 +62,16 @@ const Index = () => {
         throw new Error(errorData.message ?? "Error en el registro");
       }
 
-      const data = await response.json();
-      setSuccess("Usuario registrado exitosamente");
-      console.log("Respuesta exitosa:", data);
+      await response.json();
+      showNotification("¡Registro exitoso!", "success");
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
     } catch (err: unknown) {
-      console.error("Error detallado:", err);
-      if (err instanceof Error) {
-        if (err.name === "AbortError") {
-          setError("Tiempo de espera agotado. Por favor, intenta de nuevo.");
-        } else {
-          setError(err.message || "Error al conectar con el servidor");
-        }
-      } else {
-        setError("Error al conectar con el servidor");
-      }
+      const errorMessage =
+        err instanceof Error ? err.message : "Error desconocido";
+      setError(errorMessage);
+      showNotification(errorMessage, "error");
     } finally {
       setLoading(false);
     }
@@ -130,7 +128,6 @@ const Index = () => {
           disabled={loading}
         />
         {error && <div className="text-red-500 text-sm">{error}</div>}
-        {success && <div className="text-green-600 text-sm">{success}</div>}
       </form>
     </div>
   );

@@ -23,7 +23,3 @@ const customJestConfig = {
 };
 
 module.exports = createJestConfig(customJestConfig);
-
-module.exports = {
-  testPathIgnorePatterns: ["__tests__/"],
-};

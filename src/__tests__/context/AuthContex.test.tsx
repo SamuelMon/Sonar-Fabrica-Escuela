@@ -16,7 +16,7 @@ function TestComponent() {
       <span data-testid="auth">
         {isAuthenticated ? "autenticado" : "no-auth"}
       </span>
-      <span data-testid="token">{token || "sin-token"}</span>
+      <span data-testid="token">{token ?? "sin-token"}</span>
       <button onClick={() => login("abc123")}>Login</button>
       <button onClick={logout}>Logout</button>
       <button onClick={() => showNotification("Mensaje", "success")}>
@@ -50,14 +50,18 @@ describe("AuthContext", () => {
   beforeAll(() => {
     // @ts-expect-error: EventSource is not defined in the Node.js test environment, so we mock it here
     global.EventSource = class {
-      // Puedes agregar métodos mock si tu código los usa
-      close() {}
-      addEventListener() {}
-      removeEventListener() {}
+      close() {
+        // Método vacío intencionalmente para el mock de EventSource en tests
+      }
+      addEventListener() {
+        // Método vacío intencionalmente para el mock de EventSource en tests
+      }
+      removeEventListener() {
+        // Método vacío intencionalmente para el mock de EventSource en tests
+      }
       onmessage = null;
       onerror = null;
       onopen = null;
-      constructor() {}
     };
   });
 

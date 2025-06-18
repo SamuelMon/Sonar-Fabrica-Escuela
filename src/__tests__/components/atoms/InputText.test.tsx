@@ -9,10 +9,31 @@ describe("InputText Component", () => {
 
   test("maneja cambios en el valor", () => {
     const mockChange = jest.fn();
-    render(<InputText value="" onChange={mockChange} placeholder={""} />);
-    fireEvent.change(screen.getByRole("textbox"), {
-      target: { value: "test@example.com" },
+    render(<InputText value="" onChange={mockChange} placeholder="Correo" />);
+    fireEvent.change(screen.getByPlaceholderText("Correo"), {
+      target: { value: "nuevo valor" },
     });
     expect(mockChange).toHaveBeenCalled();
+  });
+
+  test("renderiza el input deshabilitado", () => {
+    render(<InputText placeholder="Deshabilitado" disabled />);
+    expect(screen.getByPlaceholderText("Deshabilitado")).toBeDisabled();
+  });
+
+  test("usa el tipo correcto", () => {
+    render(<InputText placeholder="Contraseña" type="password" />);
+    expect(screen.getByPlaceholderText("Contraseña")).toHaveAttribute(
+      "type",
+      "password"
+    );
+  });
+
+  test("renderiza con name", () => {
+    render(<InputText placeholder="Nombre" name="nombre" />);
+    expect(screen.getByPlaceholderText("Nombre")).toHaveAttribute(
+      "name",
+      "nombre"
+    );
   });
 });

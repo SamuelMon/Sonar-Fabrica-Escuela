@@ -17,9 +17,11 @@ const customJestConfig = {
     "!src/**/*.d.ts",
     "!src/**/_*.{js,jsx,ts,tsx}",
     "!src/**/*.stories.{js,jsx,ts,tsx}",
-    "!src/**/*.test.{js,jsx,ts,tsx}", // <--- ignora archivos de test
-    "!src/**/__tests__/**", // <--- ignora carpetas __tests__
   ],
 };
 
 module.exports = createJestConfig(customJestConfig);
+
+module.exports = {
+  testPathIgnorePatterns: ["__tests__/"],
+};
